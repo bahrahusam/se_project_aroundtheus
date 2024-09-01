@@ -1,0 +1,11 @@
+.footer {
+  margin-bottom: 60px;
+  margin-top: 67px;
+}
+.footer__content {
+  color: #545454;
+  font-family: Inter, Arial, "Times New Roman", Times, serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21.78px;
+}
