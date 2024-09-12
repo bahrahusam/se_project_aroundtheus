@@ -56,3 +56,15 @@
   background: transparent url("../images/like-button-hover.svg") center
     no-repeat;
 }
+
+@media screen and (max-width: 480px) {
+  .cards {
+    margin-top: 36px;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .cards {
+    margin-top: 51px;
+  }
+}

@@ -60,7 +60,7 @@
 
 .profile__add-button {
   display: block;
-  background: transparent url("../images/add-button3.svg") center no-repeat;
+  background: transparent url("../images/add-button.svg") center no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
@@ -69,4 +69,32 @@
 
 .profile__add-button:hover {
   background: transparent url("../images/Add-button-hover.svg") center no-repeat;
+}
+
+@media screen and (max-width: 480px) {
+  .profile {
+    flex-direction: column;
+  }
+
+  .profile__info {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 36px;
+  }
+
+  .profile__description {
+    width: 100%;
+    text-align: center;
+    margin-top: 14px;
+  }
+
+  .profile__add-button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 282px;
+  }
 }
