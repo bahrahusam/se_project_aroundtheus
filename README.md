@@ -1,21 +1,23 @@
 # Project 3: Around The U.S.
 
-### Overview  
+Github Link:
+https://github.com/bahrahusam/se_project_aroundtheus.git
 
-* Intro  
-* Figma  
-* Images  
-  
+### Overview
+
+- Intro
+- Figma
+- Images
+
 **Intro**
-  
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.  
-  
-**Figma**  
-  
-* [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)  
-  
-**Images**  
-  
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster. 
-  
-Good luck and have fun!
+
+This project is the first rendition of an interactive web page where users can add or remove photos. It is a singular page and used technologies such as flex box, grid, media queries, and uses resposive design to display text/images appropriately on mobile (320px), desktop(1280px) and tablet (880px).
+
+**Figma**
+
+Link to the project on Figma: https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1
+
+**Images**
+
+![Main Page View](images/Mainpage.png)
+![Mobile View](images/Mobile.png)

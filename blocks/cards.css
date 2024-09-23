@@ -4,7 +4,7 @@
   margin-bottom: 40px;
 }
 
-.card__list {
+.cards__list {
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, 282px);
@@ -13,58 +13,14 @@
   margin: 0px;
 }
 
-.card {
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  list-style: none;
-}
-
-.card__image {
-  width: 282px;
-  height: 282px;
-}
-
-.card__description {
-  display: flex;
-  background: white;
-  padding: 25px 20px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.card__title {
-  max-width: 220px;
-  font-size: 24px;
-  line-height: 29.05px;
-  font-family: Inter, Arial, "Times New Roman", Times, serif;
-  font-weight: 900px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  margin: 0px;
-}
-
-.card__like-button {
-  background: transparent url("../images/like-button2.svg") center no-repeat;
-  border: none;
-  width: 21px;
-  height: 18px;
-}
-
-.card__like-button:hover {
-  background: transparent url("../images/like-button-hover.svg") center
-    no-repeat;
+@media screen and (max-width: 850px) {
+  .cards {
+    margin-top: 51px;
+  }
 }
 
 @media screen and (max-width: 480px) {
   .cards {
     margin-top: 36px;
-  }
-}
-
-@media screen and (max-width: 850px) {
-  .cards {
-    margin-top: 51px;
   }
 }
