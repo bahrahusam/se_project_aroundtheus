@@ -13,12 +13,6 @@
   margin: 0px;
 }
 
-@media screen and (max-width: 850px) {
-  .cards {
-    margin-top: 51px;
-  }
-}
-
 @media screen and (max-width: 480px) {
   .cards {
     margin-top: 36px;
