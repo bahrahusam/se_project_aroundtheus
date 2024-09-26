@@ -1,6 +1,9 @@
 # Project 3: Around The U.S.
 
-Github Link:
+Github Project Link:
+https://bahrahusam.github.io/se_project_aroundtheus/
+
+Github Repository Link:
 https://github.com/bahrahusam/se_project_aroundtheus.git
 
 ### Overview
