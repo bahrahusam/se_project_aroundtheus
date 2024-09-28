@@ -52,8 +52,9 @@
   height: 24px;
   width: 24px;
   grid-area: button;
-  border: white 1px;
-  margin: 15px 0px 0px 18px;
+  border: white 1px solid;
+  margin: 15px auto 0px 18px;
+  box-sizing: border-box;
 }
 
 .profile__edit-button:hover {
@@ -66,7 +67,8 @@
   width: 150px;
   height: 50px;
   margin-left: auto;
-  border: 2px;
+  margin-bottom: 16px;
+  border: white solid 2px;
   border-radius: 2px;
 }
 
@@ -77,6 +79,10 @@
 @media screen and (max-width: 480px) {
   .profile {
     flex-direction: column;
+  }
+
+  .profile__image {
+    margin: 0px;
   }
 
   .profile__info {
@@ -101,10 +107,23 @@
     line-height: 16.94px;
   }
 
+  .profile__edit-button {
+    margin: 4px 0px 0px 10px;
+    width: 18px;
+    height: 18px;
+  }
+
   .profile__add-button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     width: 282px;
+    background: transparent url("../images/bigadd-button.svg") center no-repeat;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 820px) {
+  .profile__add-button {
+    margin-left: 40px;
   }
 }
