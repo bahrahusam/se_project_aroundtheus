@@ -55,6 +55,7 @@
   border: white 1px solid;
   margin: 15px auto 0px 18px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {
@@ -95,14 +96,17 @@
   }
 
   .profile__title {
+    max-width: 282px;
     line-height: 26.63px;
     font-size: 22px;
   }
 
   .profile__description {
     width: 100%;
+    max-width: 282px;
     text-align: center;
     margin-top: 14px;
+    margin-bottom: 0px;
     font-size: 14px;
     line-height: 16.94px;
   }
