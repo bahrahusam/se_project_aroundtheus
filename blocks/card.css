@@ -24,7 +24,7 @@
   font-size: 24px;
   line-height: 29.05px;
   font-family: Inter, Arial, sans-serif;
-  font-weight: 900px;
+  font-weight: 900;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -36,6 +36,7 @@
   border: none;
   width: 21px;
   height: 18px;
+  cursor: pointer;
 }
 
 .card__like-button:hover {
