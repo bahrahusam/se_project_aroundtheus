@@ -1,4 +1,4 @@
-const initialcards = [
+const initialCards = [
   {
     name: Kapadokya,
     link: "https://images.unsplash.com/photo-1526048598645-62b31f82b8f5?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
