@@ -9,7 +9,7 @@
   .header {
     margin-top: 28px;
     min-height: 0px;
-    height: 56px;
+    min-height: 56px;
   }
   .header__image {
     width: 126px;
