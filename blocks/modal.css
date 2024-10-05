@@ -1,0 +1,122 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+  padding: 0 19px;
+}
+
+.modal__container {
+  position: relative;
+  color: black;
+  padding: 36px;
+  background-color: white;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.modal__opened {
+  display: flex;
+}
+
+.modal__close {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  bottom: calc(100% + 5px);
+  left: calc(100% + 5px);
+  background-image: url("../images/Close-Icon.svg");
+  width: 40px;
+  height: 40px;
+  background-repeat: none;
+  background-size: contain;
+}
+
+.modal__close:hover {
+  opacity: 0.6;
+}
+
+.modal__heading {
+  font-size: 24px;
+  line-height: 29.05px;
+  font-weight: 900;
+  color: black;
+  font-family: Inter, Arial, sans-serif;
+  margin: 0px;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 54px;
+  gap: 30px;
+}
+
+.modal__text {
+  min-width: 356px;
+  min-height: 27px;
+  font-size: 14px;
+  font-family: Inter, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 17px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.modal__button {
+  margin-top: 18px;
+  min-width: 358px;
+  min-height: 50px;
+  background-color: black;
+  color: white;
+  font-family: Inter, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  border-radius: 2px;
+  border: none;
+}
+
+.modal__button:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 574px) {
+  .modal__container {
+    padding: 25px 22px;
+    max-width: 282px;
+  }
+
+  .modal__heading {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .modal__form {
+    margin-top: 75px;
+  }
+
+  .modal__text {
+    min-width: 238px;
+  }
+
+  .modal__button {
+    font-size: 14px;
+    line-height: 17px;
+    min-width: 238px;
+  }
+
+  .modal__close {
+    height: 26px;
+    width: 26px;
+    right: 0px;
+    left: auto;
+    bottom: calc(100% + 14px);
+  }
+}
