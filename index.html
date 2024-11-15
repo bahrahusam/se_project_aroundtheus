@@ -99,16 +99,26 @@
             placeholder="Image link"
             required
           />
-          <button type="submit" class="modal__button">Save</button>
+          <button type="submit" class="modal__button">Create</button>
         </form>
       </div>
     </div>
+    <!-- Card Picture Modal -->
+    <div class="modal" id="card-picture-modal">
+      <div class="modal__picture-container">
+        <button class="modal__close" id="modal-close-button"></button>
+        <img src="" alt="" class="modal__image" />
+        <p class="modal__image-description"></p>
+      </div>
+    </div>
+
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" />
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button class="card__like-button" type="button"></button>
+          <button class="card__delete-button" type="button"></button>
         </div>
       </li>
     </template>

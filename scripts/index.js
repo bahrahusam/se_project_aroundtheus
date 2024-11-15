@@ -35,10 +35,18 @@ const initialCards = [
 const profileEditBtn = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileAddModal = document.querySelector("#add-card-modal");
+const cardPictureModal = document.querySelector("#card-picture-modal");
+const cardPictureModalImage = cardPictureModal.querySelector(".modal__image");
+const cardPictureModalDescription = cardPictureModal.querySelector(
+  ".modal__image-description"
+);
 const profileModalCloseButton = profileEditModal.querySelector(
   "#modal-close-button"
 );
 const addModalCloseButton = profileAddModal.querySelector(
+  "#modal-close-button"
+);
+const pictureModalCloseButton = cardPictureModal.querySelector(
   "#modal-close-button"
 );
 const profileTitle = document.querySelector(".profile__title");
@@ -65,12 +73,36 @@ function getCardElement(cardData) {
   //access the card title and image and store them in variables
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
+  const likeButton = cardElement.querySelector(".card__like-button");
+  likeButton.addEventListener("click", () => {
+    likeButton.classList.toggle("card__like-button_active");
+  });
+  // access the delete button
+  const deleteCardButton = cardElement.querySelector(".card__delete-button");
+  // add an event listener for when the delete button is clicked
+  deleteCardButton.addEventListener("click", () => {
+    cardElement.remove();
+  });
+  // add event listener when image is clicked.
+  cardImageEl.addEventListener("click", () => {
+    openModal(cardPictureModal);
+    // picture should display what the element picture is.
+    cardPictureModalImage.src = cardData.link;
+    // description should display the same as well.
+    cardPictureModalDescription.textContent = cardData.name;
+  });
+  //add event listener for close button.
+  pictureModalCloseButton.addEventListener("click", () =>
+    closePopup(cardPictureModal)
+  );
+
   //set the path to the image to the link field of the object
   cardImageEl.src = cardData.link;
   //set the image alt text to the name field of the object
   cardImageEl.alt = cardData.name;
   //set the card title to the name field of the object, too
   cardTitleEl.textContent = cardData.name;
+
   //return the ready HTML element with the filled-in data
   return cardElement;
 }
@@ -120,7 +152,11 @@ profileModalCloseButton.addEventListener("click", () =>
 addModalCloseButton.addEventListener("click", () =>
   closePopup(profileAddModal)
 );
+
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+
 addCardForm.addEventListener("submit", handleAddCardFormSubmit);
+
+// cardPictureModal.addEventListener
 
 initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
