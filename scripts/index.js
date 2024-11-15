@@ -88,13 +88,11 @@ function getCardElement(cardData) {
     openModal(cardPictureModal);
     // picture should display what the element picture is.
     cardPictureModalImage.src = cardData.link;
+    //alt text for image should display the name of image.
+    cardPictureModalImage.alt = cardData.name;
     // description should display the same as well.
     cardPictureModalDescription.textContent = cardData.name;
   });
-  //add event listener for close button.
-  pictureModalCloseButton.addEventListener("click", () =>
-    closePopup(cardPictureModal)
-  );
 
   //set the path to the image to the link field of the object
   cardImageEl.src = cardData.link;
@@ -102,7 +100,6 @@ function getCardElement(cardData) {
   cardImageEl.alt = cardData.name;
   //set the card title to the name field of the object, too
   cardTitleEl.textContent = cardData.name;
-
   //return the ready HTML element with the filled-in data
   return cardElement;
 }
@@ -134,6 +131,8 @@ function handleAddCardFormSubmit(e) {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListEl);
+  //Reset card inputs for title and URL
+  e.target.reset();
   closePopup(profileAddModal);
 }
 
@@ -151,6 +150,10 @@ profileModalCloseButton.addEventListener("click", () =>
 );
 addModalCloseButton.addEventListener("click", () =>
   closePopup(profileAddModal)
+);
+//add event listener for picture modal close button.
+pictureModalCloseButton.addEventListener("click", () =>
+  closePopup(cardPictureModal)
 );
 
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
