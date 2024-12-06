@@ -98,6 +98,10 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+.modal__input_red-border {
+  border-bottom: 1px solid #ff0000;
+}
+
 .modal__button {
   margin-top: 18px;
   min-width: 358px;
@@ -114,6 +118,30 @@
 
 .modal__button:hover {
   opacity: 0.8;
+}
+.modal__button_disabled {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  opacity: 20%;
+}
+.modal__button_disabled:hover {
+  opacity: 20%;
+}
+
+.modal__input_type_error {
+}
+
+.modal__error_visible {
+}
+
+.modal__error {
+  margin-top: -25px;
+  font-family: Inter, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14.52px;
+  color: #ff0000;
 }
 
 @media screen and (max-width: 574px) {

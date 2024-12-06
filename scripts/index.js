@@ -148,6 +148,28 @@ addNewCardButton.addEventListener("click", () => openModal(profileAddModal));
 profileModalCloseButton.addEventListener("click", () =>
   closePopup(profileEditModal)
 );
+
+//event listener for esc key
+document.addEventListener("keydown", function (e) {
+  if (e.key === "Escape") {
+    // Find any open modal and close it
+    const openModal = document.querySelector(".modal_opened");
+    if (openModal) {
+      closePopup(openModal); // Pass the open modal to the close function
+    }
+  }
+});
+
+//listen to click on overlay of any modal to close it
+document.querySelectorAll(".modal").forEach((modal) => {
+  modal.addEventListener("click", function (e) {
+    // Check if the click happened on the overlay (not on the modal content)
+    if (e.target === modal) {
+      closePopup(modal);
+    }
+  });
+});
+
 addModalCloseButton.addEventListener("click", () =>
   closePopup(profileAddModal)
 );

@@ -63,17 +63,32 @@
             name="title"
             id="profile-title-input"
             placeholder="Name"
+            maxlength="40"
+            minlength="2"
             required
           />
+          <span class="modal__error" id="profile-title-input-error"></span>
           <input
             class="modal__input"
             type="text"
             name="description"
             id="profile-description-input"
             placeholder="Description"
+            maxlength="200"
+            minlength="2"
             required
           />
-          <button type="submit" class="modal__button">Save</button>
+          <span
+            class="modal__error"
+            id="profile-description-input-error"
+          ></span>
+          <button
+            type="submit"
+            class="modal__button modal__button_disabled"
+            disabled
+          >
+            Save
+          </button>
         </form>
       </div>
     </div>
@@ -87,19 +102,29 @@
             class="modal__input modal__input_type_title"
             type="text"
             name="title"
-            id="profile-title-input"
+            id="card-title-input"
             placeholder="Title"
+            maxlength="30"
+            minlength="1"
             required
           />
+          <span class="modal__error" id="card-title-input-error"></span>
           <input
             class="modal__input modal__input_type_url"
-            type="text"
+            type="url"
             name="description"
-            id="profile-description-input"
+            id="card-url-input"
             placeholder="Image link"
             required
           />
-          <button type="submit" class="modal__button">Create</button>
+          <span class="modal__error" id="card-url-input-error"></span>
+          <button
+            type="submit"
+            class="modal__button modal__button_disabled"
+            disabled
+          >
+            Create
+          </button>
         </form>
       </div>
     </div>
@@ -123,6 +148,7 @@
       </li>
     </template>
 
-    <script src="./scripts/index.js"></script>
+    <script defer src="./scripts/index.js"></script>
+    <script defer src="./scripts/validation.js"></script>
   </body>
 </html>
