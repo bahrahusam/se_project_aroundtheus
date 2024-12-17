@@ -7,7 +7,6 @@ function showInputError(formElement, inputElement, options) {
   inputElement.classList.add(options.inputErrorClass);
   errorMessageElement.textContent = inputElement.validationMessage;
   errorMessageElement.classList.add(options.errorClass);
-  inputElement.classList.add("modal__input_red-border");
 }
 
 function hideInputError(formElement, inputElement, options) {
@@ -17,7 +16,6 @@ function hideInputError(formElement, inputElement, options) {
   inputElement.classList.remove(options.inputErrorClass);
   errorMessageElement.textContent = "";
   errorMessageElement.classList.remove(options.errorClass);
-  inputElement.classList.remove("modal__input_red-border");
 }
 
 function checkInputValidity(formElement, inputElement, options) {
@@ -28,7 +26,7 @@ function checkInputValidity(formElement, inputElement, options) {
   }
 }
 
-function toggleButtonState(inputElements, SubmitButton, options) {
+function toggleButtonState(inputElements, submitButton, options) {
   let foundInvalid = false;
   inputElements.forEach((inputElement) => {
     if (!inputElement.validity.valid) {
@@ -37,11 +35,11 @@ function toggleButtonState(inputElements, SubmitButton, options) {
   });
 
   if (foundInvalid) {
-    SubmitButton.classList.add(options.inactiveButtonClass);
-    SubmitButton.disabled = true;
+    submitButton.classList.add(options.inactiveButtonClass);
+    submitButton.disabled = true;
   } else {
-    SubmitButton.classList.remove(options.inactiveButtonClass);
-    SubmitButton.disabled = false;
+    submitButton.classList.remove(options.inactiveButtonClass);
+    submitButton.disabled = false;
   }
 }
 
@@ -49,12 +47,12 @@ function setEventListeners(formElement, options) {
   const inputElements = Array.from(
     formElement.querySelectorAll(options.inputSelector)
   );
-  const SubmitButton = formElement.querySelector(".modal__button");
+  const submitButton = formElement.querySelector(options.submitButtonSelector);
 
   inputElements.forEach((inputElement) => {
     inputElement.addEventListener("input", (e) => {
       checkInputValidity(formElement, inputElement, options);
-      toggleButtonState(inputElements, SubmitButton, options);
+      toggleButtonState(inputElements, submitButton, options);
     });
   });
 }

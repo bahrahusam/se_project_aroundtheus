@@ -60,6 +60,7 @@
   bottom: calc(100% + 5px);
   left: calc(100% + 5px);
   background-image: url("../images/Close-Icon.svg");
+
   width: 40px;
   height: 40px;
   background-repeat: none;
@@ -83,7 +84,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 54px;
-  gap: 30px;
+  gap: 20px;
 }
 
 .modal__input {
@@ -96,10 +97,6 @@
   outline: none;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.modal__input_red-border {
-  border-bottom: 1px solid #ff0000;
 }
 
 .modal__button {
@@ -130,17 +127,20 @@
 }
 
 .modal__input_type_error {
+  border-bottom: 1px solid #ff0000;
 }
 
 .modal__error_visible {
 }
 
 .modal__error {
-  margin-top: -25px;
+  margin-top: -15px;
   font-family: Inter, Arial, sans-serif;
   font-weight: 400;
   font-size: 12px;
   line-height: 14.52px;
+  min-height: 30px;
+  max-width: 356px;
   color: #ff0000;
 }
 

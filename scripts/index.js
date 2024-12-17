@@ -41,13 +41,13 @@ const cardPictureModalDescription = cardPictureModal.querySelector(
   ".modal__image-description"
 );
 const profileModalCloseButton = profileEditModal.querySelector(
-  "#modal-close-button"
+  "#modalEdit-close-button"
 );
 const addModalCloseButton = profileAddModal.querySelector(
-  "#modal-close-button"
+  "#modalAdd-close-button"
 );
 const pictureModalCloseButton = cardPictureModal.querySelector(
-  "#modal-close-button"
+  "#modalPicture-close-button"
 );
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
@@ -111,10 +111,14 @@ function renderCard(cardData, wrapper) {
 
 function closePopup(modal) {
   modal.classList.remove("modal_opened");
+  // Remove the event listener for the ESC key when the modal is closed
+  document.removeEventListener("keydown", handleEscapeKey);
 }
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  // Add event listener for the ESC key when the modal is opened
+  document.addEventListener("keydown", handleEscapeKey);
 }
 
 // Event Handlers
@@ -136,6 +140,17 @@ function handleAddCardFormSubmit(e) {
   closePopup(profileAddModal);
 }
 
+// Event handler for pressing the ESC key
+function handleEscapeKey(e) {
+  if (e.key === "Escape") {
+    // Find any open modal and close it
+    const openModal = document.querySelector(".modal_opened");
+    if (openModal) {
+      closePopup(openModal); // Close the modal
+    }
+  }
+}
+
 /* Event Listeners*/
 
 profileEditBtn.addEventListener("click", () => {
@@ -148,17 +163,6 @@ addNewCardButton.addEventListener("click", () => openModal(profileAddModal));
 profileModalCloseButton.addEventListener("click", () =>
   closePopup(profileEditModal)
 );
-
-//event listener for esc key
-document.addEventListener("keydown", function (e) {
-  if (e.key === "Escape") {
-    // Find any open modal and close it
-    const openModal = document.querySelector(".modal_opened");
-    if (openModal) {
-      closePopup(openModal); // Pass the open modal to the close function
-    }
-  }
-});
 
 //listen to click on overlay of any modal to close it
 document.querySelectorAll(".modal").forEach((modal) => {
