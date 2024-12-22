@@ -1,7 +1,7 @@
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
 
-// Initial card data
+// Initial card data with updated image links
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -120,17 +120,6 @@ function renderCard(cardData, container) {
   container.prepend(cardElement);
 }
 
-//Resets validation messages
-function resetValidation(form, validationSettings) {
-  const inputs = form.querySelectorAll(validationSettings.inputSelector);
-  const errorMessages = form.querySelectorAll(validationSettings.errorClass);
-
-  inputs.forEach((input) =>
-    input.classList.remove(validationSettings.inputErrorClass)
-  );
-  errorMessages.forEach((error) => (error.textContent = ""));
-}
-
 // Event Handlers
 function handleProfileEditSubmit(e) {
   e.preventDefault();
@@ -145,15 +134,6 @@ function handleAddCardFormSubmit(e) {
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListEl);
   e.target.reset();
-
-  // Disable the submit button
-  const submitButton = addCardForm.querySelector(".modal__button");
-  submitButton.disabled = true;
-  submitButton.classList.add("modal__button_disabled");
-
-  // Reset validation
-  resetValidation(addCardForm, validationSettings);
-
   closePopup(profileAddModal);
 }
 
