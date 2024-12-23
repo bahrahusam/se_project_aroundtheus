@@ -1,7 +1,7 @@
 import FormValidator from "../components/FormValidator.js";
 import Card from "../components/Card.js";
 
-// Initial card data with updated image links
+// Initial card data
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -113,11 +113,11 @@ function handleEscapeKey(e) {
   }
 }
 
-// Renders a card and appends it to the container
-function renderCard(cardData, container) {
+// Function to create a new card
+function createCard(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
   const cardElement = card.generateCard();
-  container.prepend(cardElement);
+  cardListEl.prepend(cardElement);
 }
 
 // Event Handlers
@@ -132,7 +132,7 @@ function handleAddCardFormSubmit(e) {
   e.preventDefault();
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
-  renderCard({ name, link }, cardListEl);
+  createCard({ name, link });
   e.target.reset();
   closePopup(profileAddModal);
 }
@@ -171,4 +171,4 @@ profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardForm.addEventListener("submit", handleAddCardFormSubmit);
 
 // Render initial cards
-initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
+initialCards.forEach((cardData) => createCard(cardData));
