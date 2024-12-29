@@ -56,6 +56,12 @@ const cardListEl = document.querySelector(".cards__list");
 const cardTitleInput = addCardForm.querySelector(".modal__input_type_title");
 const cardUrlInput = addCardForm.querySelector(".modal__input_type_url");
 
+// Card Picture Modal elements
+const cardPictureModalImage = cardPictureModal.querySelector(".modal__image");
+const cardPictureModalDescription = cardPictureModal.querySelector(
+  ".modal__image-description"
+);
+
 // Validation settings
 const validationSettings = {
   inputSelector: ".modal__input",
@@ -79,11 +85,6 @@ addCardFormValidator.enableValidation();
 
 // Handles opening the image preview modal
 function handleImageClick(name, link) {
-  const cardPictureModalImage = cardPictureModal.querySelector(".modal__image");
-  const cardPictureModalDescription = cardPictureModal.querySelector(
-    ".modal__image-description"
-  );
-
   cardPictureModalImage.src = link;
   cardPictureModalImage.alt = name;
   cardPictureModalDescription.textContent = name;
@@ -134,6 +135,7 @@ function handleAddCardFormSubmit(e) {
   const link = cardUrlInput.value;
   createCard({ name, link });
   e.target.reset();
+  addCardFormValidator.resetValidation(); // Reset validation state
   closePopup(profileAddModal);
 }
 
@@ -142,18 +144,22 @@ function handleAddCardFormSubmit(e) {
 profileEditBtn.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
+  profileEditFormValidator.resetValidation(); // Reset validation state
   openModal(profileEditModal);
 });
 
-addNewCardButton.addEventListener("click", () => openModal(profileAddModal));
+addNewCardButton.addEventListener("click", () => {
+  addCardForm.reset(); // Reset form fields
+  addCardFormValidator.resetValidation(); // Reset validation state
+  openModal(profileAddModal); // Open the modal
+});
+
 profileModalCloseButton.addEventListener("click", () =>
   closePopup(profileEditModal)
 );
-
 addModalCloseButton.addEventListener("click", () =>
   closePopup(profileAddModal)
 );
-
 pictureModalCloseButton.addEventListener("click", () =>
   closePopup(cardPictureModal)
 );

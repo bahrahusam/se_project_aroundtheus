@@ -49,4 +49,17 @@ export default class FormValidator {
       this._submitButton.disabled = false;
     }
   }
+
+  //new additions to fix submit button reset to invalid
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      inputElement.classList.remove(this._settings.inputErrorClass); // Clear input error styling
+      const errorElement = this._formElement.querySelector(
+        `#${inputElement.id}-error`
+      );
+      errorElement.textContent = ""; // Clear error messages
+    });
+    this._toggleButtonState(); // Reset button state
+  }
+  //end
 }
