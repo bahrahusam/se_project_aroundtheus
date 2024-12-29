@@ -52,14 +52,21 @@ export default class FormValidator {
 
   //new additions to fix submit button reset to invalid
   resetValidation() {
+    this._toggleButtonState(); // Reset the button state
     this._inputList.forEach((inputElement) => {
-      inputElement.classList.remove(this._settings.inputErrorClass); // Clear input error styling
       const errorElement = this._formElement.querySelector(
         `#${inputElement.id}-error`
       );
+      inputElement.classList.remove(this._settings.inputErrorClass); // Remove input error styling
       errorElement.textContent = ""; // Clear error messages
     });
-    this._toggleButtonState(); // Reset button state
+  }
+
+  disableButton() {
+    this._submitButton.classList.add(this._settings.inactiveButtonClass);
+    this._submitButton.disabled = true;
   }
   //end
+
+  //new function
 }

@@ -118,7 +118,12 @@ function handleEscapeKey(e) {
 function createCard(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
   const cardElement = card.generateCard();
-  cardListEl.prepend(cardElement);
+  return cardElement; // Return the card element
+}
+//function to render card
+function renderCard(cardData, container) {
+  const cardElement = createCard(cardData); // Generate the card
+  container.prepend(cardElement); // Add the card to the container
 }
 
 // Event Handlers
@@ -133,10 +138,11 @@ function handleAddCardFormSubmit(e) {
   e.preventDefault();
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
-  createCard({ name, link });
-  e.target.reset();
-  addCardFormValidator.resetValidation(); // Reset validation state
-  closePopup(profileAddModal);
+
+  renderCard({ name, link }, cardListEl); // Render and add the new card
+  addCardForm.reset(); // Clear form inputs
+  addCardFormValidator.disableButton(); // Disable the submit button
+  closePopup(profileAddModal); // Close modal
 }
 
 /* Event Listeners */
@@ -149,7 +155,6 @@ profileEditBtn.addEventListener("click", () => {
 });
 
 addNewCardButton.addEventListener("click", () => {
-  addCardForm.reset(); // Reset form fields
   addCardFormValidator.resetValidation(); // Reset validation state
   openModal(profileAddModal); // Open the modal
 });
@@ -177,4 +182,4 @@ profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardForm.addEventListener("submit", handleAddCardFormSubmit);
 
 // Render initial cards
-initialCards.forEach((cardData) => createCard(cardData));
+initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
