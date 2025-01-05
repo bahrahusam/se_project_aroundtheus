@@ -83,12 +83,14 @@ function handleImageClick(name, link) {
 // New PopupWithForm instances (userinfo integration change)
 const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
   userInfo.setUserInfo({ name: data.title, job: data.description });
+  editProfilePopup.close(); //closes popup after editing profile
 });
 //end
 
 const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   const newCard = createCard({ name: data.title, link: data.description });
   cardSection.addItem(newCard); // Add the new card using Section's method
+  addCardPopup.close(); //closes popup after adding card
 });
 
 editProfilePopup.setEventListeners();
@@ -116,23 +118,6 @@ profileEditBtn.addEventListener("click", () => {
 addNewCardButton.addEventListener("click", () => {
   addCardFormValidator.resetValidation(); // Reset validation state
   addCardPopup.open(); // Open the add card popup
-});
-
-// Close modal on overlay click - assuming you have these events on all modals
-document.querySelectorAll(".modal").forEach((modal) => {
-  modal.addEventListener("click", function (e) {
-    if (e.target === modal) {
-      const popupInstance =
-        modal.id === "profile-edit-modal"
-          ? editProfilePopup
-          : modal.id === "add-card-modal"
-          ? addCardPopup
-          : modal.id === "card-picture-modal"
-          ? imagePopup
-          : null;
-      if (popupInstance) popupInstance.close();
-    }
-  });
 });
 
 //new code
