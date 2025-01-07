@@ -23,13 +23,16 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners(); // Call parent method to set up close listeners
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
+      const formData = this._getInputValues();
+      // Assuming _handleFormSubmit is synchronous or you don't need to wait for its result before closing and resetting
+      this._handleFormSubmit(formData);
+      this._form.reset(); // Reset the form after handling the submission
+      this.close(); // Close the popup after submission and reset
     });
   }
 
   // Public method to close the popup and reset the form
   close() {
-    this._form.reset(); // Reset the form inputs
     super.close(); // Call parent method to close the popup
   }
 }

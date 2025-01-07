@@ -4,61 +4,17 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import {
+  initialCards,
+  validationSettings,
+  profileEditBtn,
+  profileTitleInput,
+  profileDescriptionInput,
+  addNewCardButton,
+  profileEditForm,
+  addCardForm,
+} from "../utils/constants.js";
 import "../pages/index.css";
-
-// Initial card data
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
-
-/* Elements */
-const profileEditBtn = document.querySelector("#profile-edit-button");
-const profileAddModal = document.querySelector("#add-card-modal");
-const cardPictureModal = document.querySelector("#card-picture-modal");
-const profileTitle = document.querySelector(".profile__title");
-const profileDescription = document.querySelector(".profile__description");
-const profileTitleInput = document.querySelector("#profile-title-input");
-const profileDescriptionInput = document.querySelector(
-  "#profile-description-input"
-);
-const addNewCardButton = document.querySelector(".profile__add-button");
-const profileEditForm = document.querySelector(
-  "#profile-edit-modal .modal__form"
-);
-const addCardForm = document.querySelector("#add-card-modal .modal__form");
-const cardListEl = document.querySelector(".cards__list");
-
-// Validation settings
-const validationSettings = {
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
 
 // Create FormValidator instances
 const profileEditFormValidator = new FormValidator(
@@ -91,6 +47,7 @@ const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   const newCard = createCard({ name: data.title, link: data.description });
   cardSection.addItem(newCard); // Add the new card using Section's method
   addCardPopup.close(); //closes popup after adding card
+  addCardFormValidator.disableButton();
 });
 
 editProfilePopup.setEventListeners();
@@ -116,7 +73,6 @@ profileEditBtn.addEventListener("click", () => {
 //end
 
 addNewCardButton.addEventListener("click", () => {
-  addCardFormValidator.resetValidation(); // Reset validation state
   addCardPopup.open(); // Open the add card popup
 });
 
