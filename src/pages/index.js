@@ -96,3 +96,5 @@ const cardSection = new Section(
 
 // Render the initial cards on page load
 cardSection.renderItems();
+
+//new comment for test purposes
