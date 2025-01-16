@@ -71,10 +71,20 @@ export default class Api {
 
   // Delete a card
   deleteCard(cardId) {
+    console.log("Attempting to delete card with ID:", cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).then(this._handleResponse);
+    }).then((res) => {
+      console.log("DELETE response status:", res.status, res.statusText);
+      if (res.ok) {
+        return res.json().then((data) => {
+          console.log("DELETE response data:", data);
+          return data;
+        });
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
   }
 
   // Like a card
@@ -86,7 +96,7 @@ export default class Api {
   }
 
   // Dislike a card
-  dislikeCard(cardId) {
+  unlikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
@@ -98,12 +108,3 @@ export default class Api {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
 }
-
-// Initialize the API class with your options
-const api = new Api({
-  baseUrl: "https://around-api.en.tripleten-services.com/v1",
-  headers: {
-    authorization: "ccf59c0a-ab7a-465a-b874-5e58b8d51318", // Your new token
-    "Content-Type": "application/json",
-  },
-});

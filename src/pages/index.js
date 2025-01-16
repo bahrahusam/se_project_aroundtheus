@@ -3,6 +3,7 @@ import Card from "../components/Card.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
 import {
@@ -14,6 +15,8 @@ import {
   addNewCardButton,
   profileEditForm,
   addCardForm,
+  avatarEditForm,
+  avatarEditBtn,
 } from "../utils/constants.js";
 import "../pages/index.css";
 
@@ -21,7 +24,7 @@ import "../pages/index.css";
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "ccf59c0a-ab7a-465a-b874-5e58b8d51318",
+    authorization: "ea954eb7-9cc5-4b86-a221-9efd3aedab32",
     "Content-Type": "application/json",
   },
 });
@@ -35,38 +38,20 @@ api
       name: userData.name,
       job: userData.about,
     });
+    userInfo.setAvatar(userData.avatar);
   })
   .catch((err) => {
     console.error("Failed to fetch user info:", err);
     // Optionally, show user feedback here
   });
 
-// Check if initial cards have been uploaded before
-if (!localStorage.getItem("initialCardsUploaded")) {
-  // implement in api.js part of step(2,4)
-  api
-    .checkIfCardsExist()
-    .then((exist) => {
-      if (!exist) {
-        return Promise.all(initialCards.map((card) => api.addCard(card)));
-      } else {
-        console.log("Cards already exist on the server");
-        return Promise.resolve();
-      }
-    })
-    .then(() => {
-      localStorage.setItem("initialCardsUploaded", "true");
-    })
-    .catch((err) => {
-      console.error("Error during initial card upload check:", err);
-    });
-}
-
 // Fetch cards from the server (Step 2)
+let cardSection;
+
 api
   .getInitialCards()
   .then((cardsData) => {
-    const cardSection = new Section(
+    cardSection = new Section(
       {
         items: cardsData,
         renderer: (item) => {
@@ -77,26 +62,35 @@ api
       ".cards__list"
     );
     cardSection.renderItems();
-    return cardSection; // Return the cardSection for use in Step 4
+
+    // Check if initial cards exist on the server
+    const existingCardNames = cardsData.map((card) => card.name);
+    const cardsToAdd = initialCards.filter(
+      (card) => !existingCardNames.includes(card.name)
+    );
+
+    // Only add new initial cards if they're not on the server
+    if (cardsToAdd.length > 0) {
+      return Promise.all(cardsToAdd.map((card) => api.addCard(card))).then(
+        () => {
+          console.log("New initial cards added to server.");
+          // Refresh cards after adding new ones
+          return api.getInitialCards();
+        }
+      );
+    } else {
+      console.log("All initial cards already exist on the server.");
+      return Promise.resolve(cardsData); // No need to update since no new cards were added
+    }
   })
-  .then((cardSection) => {
-    // Upload initial cards (Step 4)
-    return Promise.all(initialCards.map((card) => api.addCard(card)))
-      .then((newCardsData) => {
-        console.log("All initial cards uploaded:", newCardsData);
-        // Optionally refresh the cards after upload
-        return api.getInitialCards();
-      })
-      .then((updatedCardsData) => {
-        // Clear existing cards and re-render with the new set including uploaded cards
-        cardSection.clear();
-        cardSection.renderItems(updatedCardsData);
-      });
+  .then((updatedCardsData) => {
+    // If new cards were added, this will re-render with all cards
+    cardSection.clear();
+    cardSection.renderItems(updatedCardsData);
   })
   .catch((err) => {
     console.error("Error in card operations:", err);
   });
-
 // Create FormValidator instances
 const profileEditFormValidator = new FormValidator(
   validationSettings,
@@ -104,11 +98,33 @@ const profileEditFormValidator = new FormValidator(
 );
 profileEditFormValidator.enableValidation();
 
+//form validator for add card form
 const addCardFormValidator = new FormValidator(validationSettings, addCardForm);
 addCardFormValidator.enableValidation();
 
+//form validator for avatar edit form
+const avatarEditFormValidator = new FormValidator(
+  validationSettings,
+  avatarEditForm
+);
+avatarEditFormValidator.enableValidation();
+
 /* Functions */
 
+// Create a popup for delete confirmation
+const deleteCardPopup = new PopupWithConfirmation(
+  "#delete-card-modal",
+  (cardInstance) => {
+    return api.deleteCard(cardInstance._id).then(() => {
+      cardInstance._deleteCard(); // Remove the card from the DOM after server confirmation
+    });
+  }
+);
+deleteCardPopup.setEventListeners();
+
+function handleCardDelete(cardInstance) {
+  deleteCardPopup.open(cardInstance); // Pass the card instance to the popup
+}
 // Handles opening the image preview modal
 const imagePopup = new PopupWithImage("#card-picture-modal");
 imagePopup.setEventListeners(); // Set up the event listeners from the parent class
@@ -137,6 +153,19 @@ const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
 });
 //end
 
+//avatar edit popup step (8)
+const avatarEditPopup = new PopupWithForm("#avatar-edit-modal", (data) => {
+  api
+    .setUserAvatar({ avatar: data["avatar-url"] }) // Changed method name to match api.js
+    .then((updatedUserData) => {
+      userInfo.setAvatar(updatedUserData.avatar);
+      avatarEditPopup.close();
+    })
+    .catch((err) => {
+      console.error("Failed to update avatar:", err);
+    });
+});
+avatarEditPopup.setEventListeners();
 // new addcard server integration (step 4)
 const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   api
@@ -160,7 +189,15 @@ addCardPopup.setEventListeners();
 
 // Function to create a new card
 function createCard(cardData) {
-  const card = new Card(cardData, "#card-template", handleImageClick);
+  //new: logging cardData to see what's passed through
+  console.log("Creating card with data:", cardData);
+  const card = new Card(
+    cardData,
+    "#card-template",
+    handleImageClick,
+    handleCardDelete
+  );
+  card._api = api; //new code
   const cardElement = card.generateCard();
   return cardElement; // Return the card element
 }
@@ -180,26 +217,14 @@ profileEditBtn.addEventListener("click", () => {
 addNewCardButton.addEventListener("click", () => {
   addCardPopup.open(); // Open the add card popup
 });
+//event listener for avatar edit button
+avatarEditBtn.addEventListener("click", () => {
+  avatarEditPopup.open();
+});
 
 //new code
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   jobSelector: ".profile__description",
+  avatarSelector: ".profile__image",
 });
-
-//old code commented out for now as part of step 2
-
-// // Section class integration
-// const cardSection = new Section(
-//   {
-//     items: initialCards,
-//     renderer: (item) => {
-//       const cardElement = createCard(item); // Create the card element
-//       cardSection.addItem(cardElement); // Add the card to the DOM
-//     },
-//   },
-//   ".cards__list" // Selector for the container
-// );
-
-// // Render the initial cards on page load
-// cardSection.renderItems();
