@@ -135,52 +135,91 @@ function handleImageClick(name, link) {
 
 // New PopupWithForm instances (userinfo integration change step 3)
 const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
+  // NEW CODE: Change button text to "Saving..."
+  const submitButton = editProfilePopup._form.querySelector(".modal__button");
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = "Saving...";
+
   api
     .setUserInfo({
-      name: data.title, // Assuming 'title' is where the user's name is stored in the form
-      about: data.description, // Assuming 'description' is where the job description is stored in the form
+      name: data.title,
+      about: data.description,
     })
     .then((updatedUserData) => {
       userInfo.setUserInfo({
         name: updatedUserData.name,
         job: updatedUserData.about,
       });
+      // Return a new promise for the delay
+      return new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
+    })
+    .then(() => {
+      // Close the popup here, after the delay
       editProfilePopup.close();
     })
     .catch((err) => {
       console.error("Failed to update user info:", err);
+    })
+    .finally(() => {
+      submitButton.textContent = originalButtonText;
     });
 });
 //end
 
 //avatar edit popup step (8)
 const avatarEditPopup = new PopupWithForm("#avatar-edit-modal", (data) => {
-  api
-    .setUserAvatar({ avatar: data["avatar-url"] }) // Changed method name to match api.js
+  const submitButton = avatarEditPopup._form.querySelector(".modal__button");
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = "Saving...";
+
+  const avatarData = {
+    avatar: data["avatar-url"],
+  };
+
+  return api
+    .setUserAvatar(avatarData) // Return the promise chain
     .then((updatedUserData) => {
+      console.log("Avatar update data:", updatedUserData); // Debug log
       userInfo.setAvatar(updatedUserData.avatar);
+      return new Promise((resolve) => setTimeout(resolve, 1000)); // 1000ms delay
+    })
+    .then(() => {
       avatarEditPopup.close();
     })
     .catch((err) => {
       console.error("Failed to update avatar:", err);
+      throw err; // Re-throw the error so PopupWithForm can catch it
+    })
+    .finally(() => {
+      submitButton.textContent = originalButtonText;
     });
 });
 avatarEditPopup.setEventListeners();
 // new addcard server integration (step 4)
 const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
+  const submitButton = addCardPopup._form.querySelector(".modal__button");
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = "Saving...";
+
   api
     .addCard({
-      name: data.title, // Assuming 'title' is where the card name is stored in the form
-      link: data.description, // Assuming 'description' is where the image link is stored
+      name: data.title,
+      link: data.description,
     })
     .then((newCardData) => {
       const newCard = createCard(newCardData);
-      cardSection.addItem(newCard); // Add the new card to the DOM using Section
+      cardSection.addItem(newCard);
+      return new Promise((resolve) => setTimeout(resolve, 1000)); // 1000ms delay
+    })
+    .then(() => {
       addCardPopup.close();
-      addCardFormValidator.disableButton(); // Reset form and disable submit button
+      addCardFormValidator.disableButton();
     })
     .catch((err) => {
       console.error("Failed to add new card:", err);
+    })
+    .finally(() => {
+      submitButton.textContent = originalButtonText;
     });
 });
 
