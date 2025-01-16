@@ -24,10 +24,15 @@ export default class PopupWithForm extends Popup {
     this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
       const formData = this._getInputValues();
-      // Assuming _handleFormSubmit is synchronous or you don't need to wait for its result before closing and resetting
-      this._handleFormSubmit(formData);
-      this._form.reset(); // Reset the form after handling the submission
-      this.close(); // Close the popup after submission and reset
+      // Here, we don't close the popup; we let the handler decide
+      this._handleFormSubmit(formData)
+        .then(() => {
+          this._form.reset();
+          this.close(); // Close only after promise resolves
+        })
+        .catch((error) => {
+          console.error("Error in form submission:", error);
+        });
     });
   }
 

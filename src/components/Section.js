@@ -16,4 +16,9 @@ export default class Section {
   addItem(element) {
     this._container.prepend(element); // Add the DOM element to the container
   }
+
+  // New method to clear all items from the container
+  clear() {
+    this._container.innerHTML = ""; // Clear the contents of the container
+  }
 }

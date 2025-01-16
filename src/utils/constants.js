@@ -46,7 +46,8 @@ const profileEditForm = document.querySelector(
   "#profile-edit-modal .modal__form"
 );
 const addCardForm = document.querySelector("#add-card-modal .modal__form");
-
+const avatarEditForm = document.querySelector("#avatar-edit-form");
+const avatarEditBtn = document.querySelector(".profile__edit-avatar");
 export {
   initialCards,
   validationSettings,
@@ -56,4 +57,6 @@ export {
   addNewCardButton,
   profileEditForm,
   addCardForm,
+  avatarEditForm,
+  avatarEditBtn,
 };
