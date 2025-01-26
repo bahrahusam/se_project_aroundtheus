@@ -135,12 +135,11 @@ function handleImageClick(name, link) {
 
 // New PopupWithForm instances (userinfo integration change step 3)
 const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
-  // NEW CODE: Change button text to "Saving..."
   const submitButton = editProfilePopup._form.querySelector(".modal__button");
   const originalButtonText = submitButton.textContent;
   submitButton.textContent = "Saving...";
 
-  api
+  return api
     .setUserInfo({
       name: data.title,
       about: data.description,
@@ -150,15 +149,14 @@ const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
         name: updatedUserData.name,
         job: updatedUserData.about,
       });
-      // Return a new promise for the delay
       return new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
     })
     .then(() => {
-      // Close the popup here, after the delay
       editProfilePopup.close();
     })
     .catch((err) => {
       console.error("Failed to update user info:", err);
+      throw err;
     })
     .finally(() => {
       submitButton.textContent = originalButtonText;
@@ -185,6 +183,7 @@ const avatarEditPopup = new PopupWithForm("#avatar-edit-modal", (data) => {
     })
     .then(() => {
       avatarEditPopup.close();
+      avatarEditFormValidator.disableButton();
     })
     .catch((err) => {
       console.error("Failed to update avatar:", err);
@@ -201,7 +200,7 @@ const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
   const originalButtonText = submitButton.textContent;
   submitButton.textContent = "Saving...";
 
-  api
+  return api
     .addCard({
       name: data.title,
       link: data.description,
@@ -217,6 +216,7 @@ const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
     })
     .catch((err) => {
       console.error("Failed to add new card:", err);
+      throw err;
     })
     .finally(() => {
       submitButton.textContent = originalButtonText;
