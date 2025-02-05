@@ -116,7 +116,7 @@ const deleteCardPopup = new PopupWithConfirmation(
   "#delete-card-modal",
   (cardInstance) => {
     return api.deleteCard(cardInstance._id).then(() => {
-      cardInstance._deleteCard(); // Remove the card from the DOM after server confirmation
+      cardInstance.deleteCard(); // Remove the card from the DOM after server confirmation
     });
   }
 );
@@ -149,7 +149,7 @@ const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
         name: updatedUserData.name,
         job: updatedUserData.about,
       });
-      return new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
+      // return new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
     })
     .then(() => {
       editProfilePopup.close();
@@ -166,7 +166,7 @@ const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
 
 //avatar edit popup step (8)
 const avatarEditPopup = new PopupWithForm("#avatar-edit-modal", (data) => {
-  const submitButton = avatarEditPopup._form.querySelector(".modal__button");
+  const submitButton = avatarEditPopup.form.querySelector(".modal__button");
   const originalButtonText = submitButton.textContent;
   submitButton.textContent = "Saving...";
 
@@ -179,7 +179,7 @@ const avatarEditPopup = new PopupWithForm("#avatar-edit-modal", (data) => {
     .then((updatedUserData) => {
       console.log("Avatar update data:", updatedUserData); // Debug log
       userInfo.setAvatar(updatedUserData.avatar);
-      return new Promise((resolve) => setTimeout(resolve, 1000)); // 1000ms delay
+      // return new Promise((resolve) => setTimeout(resolve, 1000)); // 1000ms delay
     })
     .then(() => {
       avatarEditPopup.close();
@@ -208,7 +208,7 @@ const addCardPopup = new PopupWithForm("#add-card-modal", (data) => {
     .then((newCardData) => {
       const newCard = createCard(newCardData);
       cardSection.addItem(newCard);
-      return new Promise((resolve) => setTimeout(resolve, 1000)); // 1000ms delay
+      // return new Promise((resolve) => setTimeout(resolve, 1000)); // 1000ms delay
     })
     .then(() => {
       addCardPopup.close();
