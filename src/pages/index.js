@@ -151,9 +151,6 @@ const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
       });
       // return new Promise((resolve) => setTimeout(resolve, 1000)); // 1s delay
     })
-    .then(() => {
-      editProfilePopup.close();
-    })
     .catch((err) => {
       console.error("Failed to update user info:", err);
       throw err;
