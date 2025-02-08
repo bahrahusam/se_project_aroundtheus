@@ -48,7 +48,7 @@ export default class Card {
         .catch((err) => console.error("Failed to like card:", err));
     }
   }
-  _deleteCard() {
+  deleteCard() {
     this._element.remove();
   }
 

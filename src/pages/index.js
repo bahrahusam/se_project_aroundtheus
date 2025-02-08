@@ -163,7 +163,7 @@ const editProfilePopup = new PopupWithForm("#profile-edit-modal", (data) => {
 
 //avatar edit popup step (8)
 const avatarEditPopup = new PopupWithForm("#avatar-edit-modal", (data) => {
-  const submitButton = avatarEditPopup.form.querySelector(".modal__button");
+  const submitButton = avatarEditPopup._form.querySelector(".modal__button");
   const originalButtonText = submitButton.textContent;
   submitButton.textContent = "Saving...";
 
