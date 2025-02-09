@@ -4,6 +4,14 @@
   align-items: center;
 }
 
+.profile__image-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  margin-right: 30px;
+}
+
 .profile__image {
   height: 120px;
   width: 120px;
@@ -11,6 +19,23 @@
   object-fit: cover;
   background-position: center;
   margin-right: 30px;
+}
+
+.profile__image:hover {
+  opacity: 50%;
+}
+
+.profile__edit-avatar {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 26px;
+  width: 26px;
+}
+.profile__image-wrapper:hover .profile__edit-avatar {
+  display: block;
 }
 
 .profile__info {
